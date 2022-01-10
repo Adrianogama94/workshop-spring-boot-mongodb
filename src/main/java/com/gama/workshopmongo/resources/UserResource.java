@@ -16,12 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.gama.workshopmongo.domain.Post;
 import com.gama.workshopmongo.domain.User;
 import com.gama.workshopmongo.dto.UserDTO;
 import com.gama.workshopmongo.services.UserService;
 
 @RestController
-@RequestMapping(value ="/users")
+@RequestMapping("/users")
 public class UserResource {
 
 	@Autowired
@@ -36,7 +37,7 @@ public class UserResource {
 		
 	}
 	
-	@GetMapping(value = "/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<User> findById(@PathVariable String id){
 		User  obj = service.findById(id);
 		
@@ -45,6 +46,14 @@ public class UserResource {
 
 	}
 	
+	@GetMapping("/{id}/posts")
+	public ResponseEntity<List<Post>> findPosts(@PathVariable String id){
+		User  obj = service.findById(id);
+				
+		return ResponseEntity.ok().body(obj.getPosts());
+
+	}
+
 	@PostMapping
 	public ResponseEntity<Void> insert(@RequestBody UserDTO objDTO){
 		User  obj = service.fromDTO(objDTO);
