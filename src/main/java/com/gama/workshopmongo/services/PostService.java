@@ -1,5 +1,6 @@
 package com.gama.workshopmongo.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,4 +26,10 @@ public class PostService {
 	public List<Post> findByTitle(String text){
 		return repo.pesquisarTitulo(text);
 	}
+	
+	public List<Post> fullSearch(String text, Date minDt, Date maxDt){
+		maxDt =  new Date(maxDt.getTime() + 24 * 60 * 60 * 1000);
+		return repo.pesquisaCompleta(text, minDt, maxDt) ;
+	}
+	
 }
